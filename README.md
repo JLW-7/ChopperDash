@@ -1,2 +1,4 @@
 # Helicopter-Game-In-Javascript
-Simple helicopter video game built with javascript.
+<h5>This is a simple helicopter video game built with javascript.</h5>
+<br>
+
