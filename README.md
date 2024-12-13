@@ -6,7 +6,10 @@
 <br>
 <br>
 <h3>Description</h3>
-<h7>This is a basic video game consisting mainly of helicopters and blocks (obstacles). It allows players to dodge obstacles, change flight direction, and collect coins.</h7>
+<h7>This is a dynamic helicopter game built with javascript where players navigate obstacles and collect coins to score points. By clicking on your mouse or touchpad, you can navigate the helicopter upwards, while releasing navigates the helicopter downwards. Points are shown on the top left corner, and will upgrade by 1 every millisecond, similar to the classic dino game built by Chrome. </h7>
+<br>
+<br>
+<h3>Demo</h3>
 <br>
 <br>
 <h3>Usage & Installation</h3>
@@ -14,7 +17,8 @@
 <br>
 <br>
 <h3>Contributing</h3>
-<h7>Main Contributor: July (JLW-7).</h7>
+<h7>Main Contributor: July</h7>
+<h7>Link to Profile: https://github.com/JLW-7</h7>
 <br>
 <br>
 <h3>License</h3>
