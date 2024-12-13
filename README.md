@@ -6,7 +6,7 @@
 <br>
 <br>
 <h3>Description</h3>
-<h7>This is a dynamic helicopter game built with javascript where players navigate obstacles and collect coins to score points. By clicking on your mouse or touchpad, you can navigate the helicopter upwards, while releasing navigates the helicopter downwards. Points are shown on the top left corner, and will upgrade by 1 every millisecond, similar to the classic dino game built by Chrome. </h7>
+<h7>This is a dynamic helicopter game built with javascript where players navigate obstacles and collect coins to score points.</h7>
 <br>
 <br>
 <h3>Demo</h3>
