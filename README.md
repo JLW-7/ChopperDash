@@ -17,8 +17,7 @@
 <br>
 <br>
 <h3>Contributing</h3>
-<h7>Main Contributor: July</h7>
-<h7>Link to Profile: https://github.com/JLW-7</h7>
+<h7>Main Contributor: https://github.com/JLW-7</h7>
 <br>
 <br>
 <h3>License</h3>
