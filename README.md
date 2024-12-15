@@ -1,7 +1,7 @@
-f<h1>Helix 1.0 (Helicopter Game)</h1>
+#Helix 1.0 (Helicopter Game)
 <h5>A simple helicopter video game built with javascript.</h5>
 <br>
-<h3>About the Creator</h3>
+<h1>About the Creator</h1>
 <h7>I am July, creator of this project. Here's the link to my profile: https://github.com/JLW-7</h7>
 <br>
 <br>
