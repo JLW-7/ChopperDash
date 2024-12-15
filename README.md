@@ -14,7 +14,7 @@
 </ul>
 <br>
 <h2>Demo</h2>
-![Alt text](path/to/image.png)
+![Mid-game: ](mid-game_img.png)
 <br>
 <br>
 <h2>Usage & Installation</h2>
