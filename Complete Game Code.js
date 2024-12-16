@@ -17,7 +17,8 @@ var DUST_BUFFER = 10;
 var COIN_RADIUS = 10;
 var NUM_COINS = 0;
 
-var NUM_OBSTACLES = 2;
+var NUM_OBSTACLES = 1;
+var current_obstacles = NUM_OBSTACLES;
 var copter;
 var dy = 0;
 var clicking = false;
@@ -32,8 +33,16 @@ var whole_terrain = [];
 var dust = [];
 var coins = [];
 
+var coinSound = new Audio("https://raw.githubusercontent.com/JLW-7/Helicopter-Game-In-Javascript/main/coin_sound.mp3");
+var gameOverSound = new Audio("https://raw.githubusercontent.com/JLW-7/Helicopter-Game-In-Javascript/main/hit_obstacle_sound.mp3");
+var bgMusic = new Audio("https://raw.githubusercontent.com/JLW-7/Helicopter-Game-In-Javascript/main/game_bgm.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.2;
+
+
 function start() {
     setup();
+    bgMusic.play();
     setTimer(game, DELAY);
     mouseDownMethod(onMouseDown);
     mouseUpMethod(onMouseUp);
@@ -67,25 +76,53 @@ function updateScore() {
 
 function game() {
     updateScore();
-    if (points == 200 || points == 201 || points == 202) {
+    
+    if (points >= 99 && points <= 130) {
         NUM_COINS = 1;
     }
-    if (points == 400 || points == 401 || points == 402) {
+    
+    if (points >= 899 && points <= 630) {
+        NUM_OBSTACLES = 2;
+    }
+    
+    if (points >= 1099 && points <= 1130) {
         NUM_COINS = 2;
     }
+   
+    if (NUM_OBSTACLES > current_obstacles) {
+        for (var i = current_obstacles; i < NUM_OBSTACLES; i++) {
+            var obstacleL = Randomizer.nextInt(140, 170);
+            var obstacleW = 35;
+            
+            var obstacle = new Rectangle(obstacleW, obstacleL);
+            obstacle.setColor(Color.green);
+        
+            var obstacleX = getWidth() + 205;
+            var obstacleY = Randomizer.nextInt(0, getHeight() - 200);
+        
+            obstacle.setPosition(obstacleX + i * (getWidth() / NUM_OBSTACLES), obstacleY);
+            obstacles.push(obstacle);
+            add(obstacle);
+        }
+        current_obstacles = NUM_OBSTACLES;
+    }
+    
     if (hitWall()) {
         lose();
         return;
     }
+    
     var collider = getCollider();
     if (collider == "obstacle") {
         lose();
         return;
     }
+    
     if (collider && coins.includes(collider)) {
         collectCoins(collider); // Pass the specific coin
         return;
     }
+    
     if (clicking) {
         dy -= 1;
         if (dy > -MAX_DY) {
@@ -97,6 +134,7 @@ function game() {
             dy = MAX_DY;
         }
     }
+    
     copter.move(0, dy);
     moveObstacle();
     moveTerrain();
@@ -119,12 +157,15 @@ function onMouseUp(e) {
 
 function addObstacle() {
     for (var i = 0; i < NUM_OBSTACLES; i++) {
-        var obstacle = new Rectangle(30, 125);
+        var obstacleL = Randomizer.nextInt(140, 170);
+        var obstacleW = 35;
+        
+        var obstacle = new Rectangle(obstacleW, obstacleL);
         obstacle.setColor(Color.green);
-
+    
         var obstacleX = getWidth();
         var obstacleY = Randomizer.nextInt(0, getHeight() - 200);
-
+    
         obstacle.setPosition(obstacleX + i * (getWidth() / NUM_OBSTACLES), obstacleY);
         obstacles.push(obstacle);
         add(obstacle);
@@ -133,7 +174,7 @@ function addObstacle() {
 
 function moveObstacle() {
     for (var i = 0; i < obstacles.length; i++) {
-        var obstacle = obstacles[i]
+        var obstacle = obstacles[i];
         obstacle.move(-OBSTACLE_SPEED, 0);
         if (obstacle.getX() < 0) {
             obstacle.setPosition(
@@ -150,22 +191,28 @@ function hitWall() {
 }
 
 function lose() {
+    bgMusic.pause();
     stopTimer(game);
     var lose_box = new Rectangle(getWidth() + 100, getHeight() + 100);
     lose_box.setColor(Color.black);
     lose_box.setPosition(getWidth() / 2 - lose_box.getWidth() / 2,
                          getHeight() / 2 - lose_box.getHeight() / 2 - 20);
     add(lose_box);
-    var lose_text = new Text("GAME OVER", "40pt Impact");
+    var lose_text = new Text("Game Over...", "40pt Impact");
     lose_text.setColor(Color.white);
     lose_text.setPosition(getWidth() / 2 - lose_text.getWidth() / 2,
                           getHeight() / 2);
     add(lose_text);
-    var lose_text2 = new Text("Click'Again'to respawn.", "14pt Andale Mono");
-    lose_text2.setColor(Color.white);
-    lose_text2.setPosition(getWidth() / 2 - lose_text2.getWidth() / 2 + 5,
-                          getHeight() / 2 + 100);
-    add(lose_text2);
+    // var respawn_box = new Rectangle(200, 50);
+    // respawn_box.setColor(Color.white);
+    // respawn_box.setPosition(getWidth() / 2 - respawn_box.getWidth() / 2 + 5,
+    //                       getHeight() / 2 + 75);
+    // add(respawn_box);
+    var respawn_text = new Text("Click here to replay.", "14pt Andale Mono");
+    respawn_text.setColor(Color.white);
+    respawn_text.setPosition(getWidth() / 2 - respawn_text.getWidth() / 2 + 5,
+                           getHeight() / 2 + 90);
+    add(respawn_text);
     var score_text = new Text(points, "18pt Andale Mono");
     score_text.setColor(Color.white);
     score_text.setPosition(getWidth() / 2 - score_text.getWidth() / 2 + 80,
@@ -191,6 +238,7 @@ function getCollider() {
 
         if (collider != null) {
             if (obstacles.includes(collider) || whole_terrain.includes(collider)) {
+                gameOverSound.play();
                 return "obstacle";
             }
             if (coins.includes(collider)) {
@@ -264,30 +312,18 @@ function moveDust() {
 
 function addCoins() {
     while (coins.length < NUM_COINS) {
-        var coin = new WebImage("https://raw.githubusercontent.com/JLW-7/Helicopter-Game-In-Javascript/refs/heads/main/Screenshot%202024-11-20%20at%2016.25.46.png");
+        var coin = new WebImage("https://raw.githubusercontent.com/JLW-7/Helicopter-Game-In-Javascript/refs/heads/main/coin_image.png");
         coin.setSize(15, 15);
 
-        var validPosition = false;
-        var attempts = 0;
+        
+        var coinX = Randomizer.nextInt(getWidth() - 50, getWidth());
+        var coinY = Randomizer.nextInt(50, getHeight() - 50);
 
-        while (!validPosition && attempts < 100) { // Retry up to 100 times for valid position
-            var coinX = Randomizer.nextInt(getWidth() - 50, getWidth());
-            var coinY = Randomizer.nextInt(50, getHeight() - 50);
-
-            // Ensure no overlap with obstacles, terrain, or other coins
-            if (CoinNotOnElement(coinX, coinY, coin)) {
-                coin.setPosition(coinX, coinY);
-                coins.push(coin);
-                add(coin);
-                validPosition = true; // Found a valid position
-            }
-
-            attempts++;
-        }
-
-        // If no valid position is found after many attempts, skip adding this coin
-        if (!validPosition) {
-            break;
+        // Ensure no overlap with obstacles, terrain, or other coins
+        if (CoinNotOnElement(coinX, coinY, coin)) {
+            coin.setPosition(coinX, coinY);
+            coins.push(coin);
+            add(coin);
         }
     }
 }
@@ -336,6 +372,7 @@ function moveCoins() {
 
 function collectCoins(coin) {
     points += 50; // Award points for collecting the coin
+    coinSound.play();
     remove(coin); // Remove the coin from the screen
     coins.splice(coins.indexOf(coin), 1); // Remove the coin from the array
     showZoomingText("+50", coin.getX(), coin.getY(), 500); 
