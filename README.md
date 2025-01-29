@@ -1,4 +1,4 @@
-<h1>🚁 Helix 1.0 (Helicopter Game)</h1>
+<h1>🚁 ChopperDash (Helicopter Game)</h1>
 <h5>A simple helicopter video game built with javascript where players avoid obstacles and collect coins to score points.</h5>
 
 <h2>📷 Demo</h2>
