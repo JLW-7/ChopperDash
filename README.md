@@ -1,5 +1,7 @@
 <h1>🚁 ChopperDash (Helicopter Game)</h1>
-<h5>A simple helicopter video game built with javascript where players avoid obstacles and collect coins to score points.</h5>
+
+> [!IMPORTANT]
+> This is an amateur project that uses the CodeHS graphics library. If you want to test it out, run it in the CodeHS sandbox or have the CodeHS graphics library installed, otherwise the game would not run properly.
 
 <h2>📷 Demo</h2>
 <div style="display: flex; gap: 10px;">
