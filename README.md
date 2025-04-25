@@ -60,9 +60,7 @@
 <h2>🧩 Technologies Used</h2>
 <ul>
   <li><strong>JavaScript:</strong> Used to create game logic, including controls, collisions, scoring, and game dynamics.</li>
-  <li><strong>HTML5:</strong> Used for structure and layout of game canvas.</li>
-  <li><strong>Canvas API:</strong> Used for providing 2D graphics for game elements.</li>
-  <li><strong>Web Audio API:</strong> Used for background music and sound effects.</li>
+  <li><strong>CodeHS Graphics Library:</strong> Used for game assets including, images, terrain and sound effects.</li>
 </ul>
 <br>
 
